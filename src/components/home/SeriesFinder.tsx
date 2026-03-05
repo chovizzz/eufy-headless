@@ -53,6 +53,7 @@ export function SeriesFinder() {
           <Link
             key={series.name}
             href={series.href}
+            aria-label={`Learn more about ${series.name}`}
             className={`group relative overflow-hidden rounded-2xl p-8 bg-linear-to-br ${series.color} text-white min-h-[200px] flex flex-col justify-end hover:shadow-xl transition-shadow`}
           >
             <h3 className="text-2xl font-bold mb-2">{series.name}</h3>

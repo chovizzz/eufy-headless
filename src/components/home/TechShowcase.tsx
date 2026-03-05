@@ -44,6 +44,7 @@ export function TechShowcase() {
             <Link
               key={item.title}
               href={item.href}
+              aria-label={`Learn more about ${item.title}`}
               className="group relative overflow-hidden rounded-2xl aspect-video bg-eufy-dark"
             >
               <Image

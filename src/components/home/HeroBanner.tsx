@@ -96,6 +96,7 @@ export function HeroBanner() {
           <div className="flex flex-wrap gap-4">
             <Link
               href={slide.primaryCta.href}
+              aria-label={`${slide.primaryCta.label} ${slide.subheading}`}
               className="inline-flex items-center px-8 py-3.5 bg-white text-eufy-dark font-semibold rounded-full hover:bg-gray-100 transition-colors text-sm"
             >
               {slide.primaryCta.label}
@@ -103,6 +104,7 @@ export function HeroBanner() {
             {slide.secondaryCta && (
               <Link
                 href={slide.secondaryCta.href}
+                aria-label={`${slide.secondaryCta.label} ${slide.subheading}`}
                 className="inline-flex items-center px-8 py-3.5 border-2 border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors text-sm"
               >
                 {slide.secondaryCta.label}

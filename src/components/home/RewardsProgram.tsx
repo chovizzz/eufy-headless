@@ -16,6 +16,7 @@ export function RewardsProgram() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/eufycredits"
+                aria-label="Learn more about eufyCredits Rewards Program"
                 className="inline-flex items-center px-8 py-3.5 bg-white text-eufy-dark font-semibold rounded-full hover:bg-gray-100 transition-colors text-sm"
               >
                 Learn More
