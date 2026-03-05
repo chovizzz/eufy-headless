@@ -43,7 +43,8 @@ const FALLBACK_NAV: NavItem[] = [
       { title: "Baby Monitors", href: "/collections/baby-monitors" },
     ],
   },
-  { title: "Explore", href: "/explore" },
+  { title: "Blog", href: "/blog" },
+  { title: "Contact", href: "/contact" },
   { title: "Support", href: "/support" },
 ];
 
