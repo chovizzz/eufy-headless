@@ -8,6 +8,7 @@ import {
   PRODUCT_BY_HANDLE_QUERY,
   BLOG_ARTICLES_QUERY,
   ARTICLE_BY_HANDLE_QUERY,
+  COLLECTION_PRODUCTS_QUERY,
 } from "./queries";
 import type { Product, Collection, BlogArticle, ShopInfo, Menu } from "./types";
 
@@ -126,6 +127,22 @@ export async function getArticleByHandle(
     return data.blog?.articleByHandle ?? null;
   } catch (error) {
     console.error("Failed to fetch article:", error);
+    return null;
+  }
+}
+
+export async function getCollectionByHandle(
+  handle: string,
+  productCount = 24,
+): Promise<Collection | null> {
+  try {
+    const data = await shopifyFetch<{ collection: Collection | null }>(
+      COLLECTION_PRODUCTS_QUERY,
+      { handle, first: productCount },
+    );
+    return data.collection;
+  } catch (error) {
+    console.error("Failed to fetch collection:", error);
     return null;
   }
 }

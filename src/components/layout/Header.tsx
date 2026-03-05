@@ -19,6 +19,7 @@ const FALLBACK_NAV: NavItem[] = [
     title: "Security",
     href: "/collections/security",
     children: [
+      { title: "All Security", href: "/collections/security" },
       { title: "Outdoor Cameras", href: "/collections/outdoor-cameras" },
       { title: "Indoor Cameras", href: "/collections/indoor-cameras" },
       { title: "Video Doorbells", href: "/collections/video-doorbells" },
@@ -30,6 +31,7 @@ const FALLBACK_NAV: NavItem[] = [
     title: "Cleaning",
     href: "/collections/cleaning",
     children: [
+      { title: "All Cleaning", href: "/collections/cleaning" },
       { title: "Robot Vacuums", href: "/collections/robot-vacuums" },
       { title: "Lawn Mowers", href: "/collections/lawn-mowers" },
     ],
@@ -38,14 +40,24 @@ const FALLBACK_NAV: NavItem[] = [
     title: "Smart Living",
     href: "/collections/smart-living",
     children: [
+      { title: "All Smart Living", href: "/collections/smart-living" },
       { title: "Smart Lights", href: "/collections/smart-lights" },
       { title: "Smart Scales", href: "/collections/smart-scales" },
       { title: "Baby Monitors", href: "/collections/baby-monitors" },
     ],
   },
+  {
+    title: "Products",
+    href: "/products",
+    children: [
+      { title: "All Products", href: "/products" },
+      { title: "New Arrivals", href: "/collections/new-arrivals" },
+      { title: "Best Sellers", href: "/collections/best-sellers" },
+      { title: "Deals", href: "/collections/deals" },
+    ],
+  },
   { title: "Blog", href: "/blog" },
   { title: "Contact", href: "/contact" },
-  { title: "Support", href: "/support" },
 ];
 
 export function Header({ shopName, navItems }: HeaderProps) {
