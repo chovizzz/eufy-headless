@@ -32,7 +32,7 @@ const VIDEOS: Video[] = [
 ];
 
 export function VideoShowcase() {
-  const [playingId, setPlayingId] = useState<string | null>(null);
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
 
   return (
     <section className="py-16 bg-eufy-gray">
@@ -42,10 +42,10 @@ export function VideoShowcase() {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {VIDEOS.map((video) => (
+          {VIDEOS.map((video, index) => (
             <div key={video.title} className="group">
               <div className="relative aspect-video rounded-xl overflow-hidden bg-eufy-dark mb-3">
-                {playingId === video.embedId ? (
+                {playingIndex === index ? (
                   <iframe
                     src={`https://www.youtube.com/embed/${video.embedId}?autoplay=1`}
                     title={video.title}
@@ -56,7 +56,7 @@ export function VideoShowcase() {
                   />
                 ) : (
                   <button
-                    onClick={() => setPlayingId(video.embedId)}
+                    onClick={() => setPlayingIndex(index)}
                     className="relative w-full h-full"
                     aria-label={`Play video: ${video.title}`}
                   >
