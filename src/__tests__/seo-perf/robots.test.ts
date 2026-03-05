@@ -28,6 +28,11 @@ describe("robots.txt", () => {
     expect(sitemapLines[0]).toBe("Sitemap: https://eufy-headless.vercel.app/sitemap.xml");
   });
 
+  it("Sitemap line contains no embedded newline (Lighthouse syntax requirement)", async () => {
+    const text = await getRobotsText();
+    expect(text).not.toMatch(/Sitemap:\s*[^\n]*\n\s*\//);
+  });
+
   it("Sitemap URL does not have double slashes", async () => {
     const text = await getRobotsText();
     const sitemapLine = text.split("\n").find((l) => l.startsWith("Sitemap:"))!;

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://eufy-seo-dev.com").replace(/\/$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://eufy-seo-dev.com").replace(/\/$/, "").replace(/\s+/g, "").trim();
 
 export function GET() {
   const content = [
