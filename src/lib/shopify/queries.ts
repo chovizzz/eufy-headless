@@ -202,6 +202,148 @@ export const SHOP_QUERY = `
   }
 `;
 
+export const PRODUCT_BY_HANDLE_QUERY = `
+  query ProductByHandle($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      description
+      descriptionHtml
+      tags
+      vendor
+      productType
+      availableForSale
+      featuredImage {
+        url
+        altText
+        width
+        height
+      }
+      images(first: 8) {
+        edges {
+          node {
+            url
+            altText
+            width
+            height
+          }
+        }
+      }
+      variants(first: 10) {
+        edges {
+          node {
+            id
+            title
+            availableForSale
+            price {
+              amount
+              currencyCode
+            }
+            compareAtPrice {
+              amount
+              currencyCode
+            }
+            image {
+              url
+              altText
+              width
+              height
+            }
+          }
+        }
+      }
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+        maxVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      seo {
+        title
+        description
+      }
+    }
+  }
+`;
+
+export const BLOG_ARTICLES_QUERY = `
+  query BlogArticles($blogHandle: String!, $first: Int!) {
+    blog(handle: $blogHandle) {
+      id
+      title
+      handle
+      articles(first: $first) {
+        edges {
+          node {
+            id
+            title
+            handle
+            excerpt
+            content
+            contentHtml
+            publishedAt
+            image {
+              url
+              altText
+              width
+              height
+            }
+            blog {
+              title
+              handle
+            }
+            authorV2 {
+              name
+            }
+            seo {
+              title
+              description
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const ARTICLE_BY_HANDLE_QUERY = `
+  query ArticleByHandle($blogHandle: String!, $articleHandle: String!) {
+    blog(handle: $blogHandle) {
+      articleByHandle(handle: $articleHandle) {
+        id
+        title
+        handle
+        excerpt
+        content
+        contentHtml
+        publishedAt
+        image {
+          url
+          altText
+          width
+          height
+        }
+        blog {
+          title
+          handle
+        }
+        authorV2 {
+          name
+        }
+        seo {
+          title
+          description
+        }
+      }
+    }
+  }
+`;
+
 export const MENU_QUERY = `
   query Menu($handle: String!) {
     menu(handle: $handle) {

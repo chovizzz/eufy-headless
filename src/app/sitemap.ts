@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { shopifyFetch } from "@/lib/shopify/client";
-import { PRODUCTS_QUERY, COLLECTIONS_QUERY } from "@/lib/shopify/queries";
-import type { Product, Collection } from "@/lib/shopify/types";
+import { PRODUCTS_QUERY, COLLECTIONS_QUERY, BLOGS_QUERY } from "@/lib/shopify/queries";
+import type { Product, Collection, BlogArticle } from "@/lib/shopify/types";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://eufy-seo-dev.com";
 
@@ -12,6 +12,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
+    },
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
     },
     {
       url: `${SITE_URL}/about`,
@@ -66,5 +78,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Failed to fetch collections for sitemap");
   }
 
-  return [...staticPages, ...productPages, ...collectionPages];
+  let blogPages: MetadataRoute.Sitemap = [];
+
+  try {
+    const blogsData = await shopifyFetch<{
+      blogs: {
+        edges: {
+          node: {
+            handle: string;
+            articles: { edges: { node: BlogArticle }[] };
+          };
+        }[];
+      };
+    }>(BLOGS_QUERY, { first: 50 });
+
+    blogPages = blogsData.blogs.edges.flatMap(({ node: blog }) =>
+      blog.articles.edges.map(({ node: article }) => ({
+        url: `${SITE_URL}/blog/${article.handle}`,
+        lastModified: new Date(article.publishedAt),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      })),
+    );
+  } catch {
+    console.error("Failed to fetch blog articles for sitemap");
+  }
+
+  return [...staticPages, ...productPages, ...collectionPages, ...blogPages];
 }

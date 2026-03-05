@@ -5,6 +5,9 @@ import {
   BLOGS_QUERY,
   SHOP_QUERY,
   MENU_QUERY,
+  PRODUCT_BY_HANDLE_QUERY,
+  BLOG_ARTICLES_QUERY,
+  ARTICLE_BY_HANDLE_QUERY,
 } from "./queries";
 import type { Product, Collection, BlogArticle, ShopInfo, Menu } from "./types";
 
@@ -71,6 +74,58 @@ export async function getMenu(handle: string): Promise<Menu | null> {
     return data.menu;
   } catch (error) {
     console.error("Failed to fetch menu:", error);
+    return null;
+  }
+}
+
+export async function getProductByHandle(handle: string): Promise<Product | null> {
+  try {
+    const data = await shopifyFetch<{ product: Product | null }>(
+      PRODUCT_BY_HANDLE_QUERY,
+      { handle },
+    );
+    return data.product;
+  } catch (error) {
+    console.error("Failed to fetch product:", error);
+    return null;
+  }
+}
+
+export async function getBlogArticlesByBlog(
+  blogHandle: string,
+  count = 20,
+): Promise<{ blogTitle: string; articles: BlogArticle[] } | null> {
+  try {
+    const data = await shopifyFetch<{
+      blog: {
+        id: string;
+        title: string;
+        handle: string;
+        articles: { edges: { node: BlogArticle }[] };
+      } | null;
+    }>(BLOG_ARTICLES_QUERY, { blogHandle, first: count });
+    if (!data.blog) return null;
+    return {
+      blogTitle: data.blog.title,
+      articles: data.blog.articles.edges.map((e) => e.node),
+    };
+  } catch (error) {
+    console.error("Failed to fetch blog articles:", error);
+    return null;
+  }
+}
+
+export async function getArticleByHandle(
+  blogHandle: string,
+  articleHandle: string,
+): Promise<BlogArticle | null> {
+  try {
+    const data = await shopifyFetch<{
+      blog: { articleByHandle: BlogArticle | null } | null;
+    }>(ARTICLE_BY_HANDLE_QUERY, { blogHandle, articleHandle });
+    return data.blog?.articleByHandle ?? null;
+  } catch (error) {
+    console.error("Failed to fetch article:", error);
     return null;
   }
 }
